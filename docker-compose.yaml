@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+
+
+  postgres-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -q -h localhost -p 5432 -U your_database_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+      
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  express-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mohamed-abbas-al-robaiey
+    container_name: mohamed-abbas-al-robaiey-container
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      PGUSER: postgres
+      PGPASSWORD: mysecretpassword
+      PGHOST: postgres-db
+      PGDATABASE: course
+      PGPORT: 5432
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:3000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    
+  
+
+  
