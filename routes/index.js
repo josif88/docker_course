@@ -42,6 +42,8 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.use("/image", express.static("public"));
+
 //user routes
 router.get("/users/:id", userController.getById);
 router.post("/users", userController.create);
