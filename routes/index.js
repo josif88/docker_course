@@ -5,7 +5,7 @@ import * as userController from "../controllers/user.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/db", async (req, res) => {
   try {
     const { username } = req.query;
 
@@ -42,7 +42,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.use("/image", express.static("public"));
+router.use("/", express.static("public"));
 
 //user routes
 router.get("/users/:id", userController.getById);
