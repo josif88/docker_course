@@ -31,5 +31,5 @@ app.listen(port, () => {
   );
 });
 
-// start the app
+// start the app from here
 export default app;
